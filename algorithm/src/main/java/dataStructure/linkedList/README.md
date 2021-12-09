@@ -42,3 +42,50 @@ public class Solution {
     }
 }
 ```
+
+### [q23. 合并 k 个有序链表](https://leetcode-cn.com/problems/merge-k-sorted-lists/)
+
+逻辑类似合并两个有序链表
+
+难点在于, 如何快速得到 `k` 个节点中的最小节点, 接到结果链表上
+
+**优先队列**, 把链表节点放入一个最小堆, 就可以每次获得 `k` 个节点中的最小节点
+
+```java
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        }
+        // 虚拟头结点
+        ListNode dummy = new ListNode(-1), p = dummy;
+
+        // 优先级队列, 最小堆
+        PriorityQueue<ListNode> priorityQueue = new PriorityQueue<>(lists.length, new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode o1, ListNode o2) {
+                return o1.val - o2.val;
+            }
+        });
+
+        // 将 k 个链表的头结点加入最小堆
+        for (ListNode head : lists) {
+            if (head != null) {
+                priorityQueue.add(head);
+            }
+        }
+
+        while (!priorityQueue.isEmpty()) {
+            // 获取最小节点, 接到结果链表中
+            ListNode node = priorityQueue.poll();
+            p.next = node;
+            if (node.next != null) {
+                priorityQueue.add(node.next);
+            }
+            p = p.next;
+        }
+
+        return dummy.next;
+    }
+}
+```
