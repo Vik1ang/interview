@@ -468,7 +468,7 @@ public class Solution {
 
 ### [剑指 Offer 06. 从尾到头打印链表](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/)
 
-参考 [q206. 反转链表](#q206-反转链表)
+反转链表 参考 [q206. 反转链表](#q206-反转链表)
 
 使用栈
 
@@ -490,4 +490,18 @@ public class Solution {
         return res;
     }
 }
+```
+
+### [q237. 删除链表中的节点](https://leetcode-cn.com/problems/delete-node-in-a-linked-list/)
+
+和下一个节点交换
+
+```java
+public class Solution {
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}
+
 ```
