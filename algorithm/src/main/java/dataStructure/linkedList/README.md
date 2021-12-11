@@ -1,21 +1,7 @@
 # 链表
 
-<!--ts-->
--e * [链表](#链表)
-      * [<a href="https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/" rel="nofollow">q21. 合并两个有序链表</a>](#q21-合并两个有序链表)
-      * [<a href="https://leetcode-cn.com/problems/merge-k-sorted-lists/" rel="nofollow">q23. 合并 k 个有序链表</a>](#q23-合并-k-个有序链表)
-      * [单链表的倒数第 k 个节点](#单链表的倒数第-k-个节点)
-      * [<a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/" rel="nofollow">q19. 删除链表的倒数第 N 个结点</a>](#q19-删除链表的倒数第-n-个结点)
-      * [<a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" rel="nofollow">q876. 链表的中间结点</a>](#q876-链表的中间结点)
-      * [<a href="https://leetcode-cn.com/problems/linked-list-cycle/" rel="nofollow">q141. 判断链表是否包含环</a>](#q141-判断链表是否包含环)
-      * [<a href="https://leetcode-cn.com/problems/linked-list-cycle-ii/" rel="nofollow">q142. 链表环的起点</a>](#q142-链表环的起点)
-      * [<a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/" rel="nofollow">q160. 两个链表是否相交</a>](#q160-两个链表是否相交)
-      * [<a href="https://leetcode-cn.com/problems/reverse-linked-list/" rel="nofollow">q206. 反转链表</a>](#q206-反转链表)
-      * [<a href="https://leetcode-cn.com/problems/add-two-numbers/" rel="nofollow">q2. 两数相加</a>](#q2-两数相加)
--e 
-<!-- Added by: weiqiangzhuang, at: Sat Dec 11 20:34:29 CST 2021 -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
-<!--te-->
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
