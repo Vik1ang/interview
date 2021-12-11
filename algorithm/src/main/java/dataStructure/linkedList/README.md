@@ -539,3 +539,35 @@ public class Solution {
     }
 }
 ```
+
+### [q82. 删除排序链表中的重复元素 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/)
+
+如果当前 `cur.next` 与 `cur.next.next` 对应的元素相同, 那么我们就需要将 `cur.next` 以及所有后面拥有相同元素值的链表节点全部删除; 
+我们记下这个元素值 `xx`, 随后不断将 `cur.next` 从链表中移除, 直到 `cur.next` 为空节点或者其元素值不等于 `xx` 为止
+
+```java
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = dummy;
+
+        while (curr.next != null && curr.next.next != null) {
+            if (curr.next.val == curr.next.next.val) {
+                int val = curr.next.val;
+                while (curr.next != null && curr.next.val == val) {
+                    curr.next = curr.next.next;
+                }
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        return dummy.next;
+    }
+}
+```
