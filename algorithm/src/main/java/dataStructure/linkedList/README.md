@@ -378,3 +378,90 @@ public class Solution {
     }
 }
 ```
+
+### [q445. 两数相加 II](https://leetcode-cn.com/problems/add-two-numbers-ii/)
+
+```java
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        ListNode p1 = reverseList(l1);
+        ListNode p2 = reverseList(l2);
+        ListNode dummy = new ListNode(-1);
+        ListNode p = dummy;
+
+        int carry = 0;
+        while (p1 != null || p2 != null) {
+            int num1 = p1 != null ? p1.val : 0;
+            int num2 = p2 != null ? p2.val : 0;
+            int sum = num1 + num2 + carry;
+
+            p.next = new ListNode(sum % 10);
+            carry = sum / 10;
+
+            if (p1 != null) {
+                p1 = p1.next;
+            }
+
+            if (p2 != null) {
+                p2 = p2.next;
+            }
+            p = p.next;
+        }
+
+        if (carry > 0) {
+            p.next = new ListNode(carry);
+            p = p.next;
+        }
+
+        return reverseList(dummy.next);
+    }
+
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+}
+```
+
+如果不可以翻转链表, 使用栈: 把所有数字压入栈中, 再依次取出相加
+
+```java
+public class Solution {
+  public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    Deque<Integer> stack1 = new LinkedList<>();
+    Deque<Integer> stack2 = new LinkedList<>();
+
+    while (l1 != null) {
+      stack1.push(l1.val);
+      l1 = l1.next;
+    }
+    while (l2 != null) {
+      stack2.push(l2.val);
+      l2 = l2.next;
+    }
+
+    int carry = 0;
+    ListNode ans = null;
+
+    while (!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
+      int num1 = stack1.isEmpty() ? 0 : stack1.pop();
+      int num2 = stack2.isEmpty() ? 0 : stack2.pop();
+      int num = num1 + num2 + carry;
+      ListNode curr = new ListNode(num % 10);
+      curr.next = ans;
+      ans = curr;
+      carry = num / 10;
+    }
+
+    return ans;
+  }
+}
+```
