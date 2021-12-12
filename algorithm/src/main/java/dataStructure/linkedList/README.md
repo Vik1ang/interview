@@ -576,3 +576,29 @@ public class Solution {
     }
 }
 ```
+
+### [q203. 移除链表元素](https://leetcode-cn.com/problems/remove-linked-list-elements/)
+
+```java
+public class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode p = dummy;
+
+        while (p.next != null) {
+            if (p.next.val == val) {
+                p.next = p.next.next;
+            } else {
+                p = p.next;
+            }
+        }
+
+        return dummy.next;
+    }
+}
+```
+
+### [面试题 02.02. 返回倒数第 k 个节点](https://leetcode-cn.com/problems/kth-node-from-end-of-list-lcci/)
+
+参考 [单链表的倒数第 k 个节点](#单链表的倒数第-k-个节点)
