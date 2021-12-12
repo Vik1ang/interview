@@ -602,3 +602,74 @@ public class Solution {
 ### [面试题 02.02. 返回倒数第 k 个节点](https://leetcode-cn.com/problems/kth-node-from-end-of-list-lcci/)
 
 参考 [单链表的倒数第 k 个节点](#单链表的倒数第-k-个节点)
+
+### [q24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+![](https://pic.leetcode-cn.com/42c91b69e3f38d63a0d0153c440724e69bd2d24b95091b4dcc5c68172f8f4e1e-%E8%BF%AD%E4%BB%A3.gif)
+
+```java
+public class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+
+        ListNode p = dummy;
+
+        while (p.next != null && p.next.next != null) {
+            ListNode node1 = p.next;
+            ListNode node2 = p.next.next;
+            p.next = node2;
+            node1.next = node2.next;
+            node2.next = node1;
+            p = node1;
+        }
+
+        return dummy.next;
+    }
+}
+
+```
+
+### []()
+
+1. 创建哑节点 `dummyHead`, 令 `dummyHead.next = head`; 引入哑节点是为了便于在 `head` 节点之前插入节点
+2. 维护 `lastSorted` 为链表的已排序部分的最后一个节点, 初始时 `lastSorted = head`
+3. 维护 `curr` 为待插入的元素, 初始时 `curr = head.next`
+4. 比较 lastSorted 和 curr 的节点值
+   + 若 `lastSorted.val <= curr.val`, 说明 `curr` 应该位于 `lastSorted` 之后, 将 `lastSorted` 后移一位, `curr` 变成新的 `lastSorted`
+   + 否则, 从链表的头节点开始往后遍历链表中的节点m, 寻找插入 curr 的位置; 令 `prev` 为插入 `curr` 的位置的前一个节点
+5. 令 `curr = lastSorted.next`, 此时 curr 为下一个待插入的元素
+6. 重复第 5 步和第 6 步, 直到 curr 变成空, 排序结束
+  
+![](https://assets.leetcode-cn.com/solution-static/147/1.png)
+![](https://assets.leetcode-cn.com/solution-static/147/5.png)
+![](https://assets.leetcode-cn.com/solution-static/147/6.png)
+
+```java
+public class Solution {
+  public ListNode insertionSortList(ListNode head) {
+    if (head == null) {
+      return head;
+    }
+
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+    ListNode lastSorted = head, curr = head.next;
+    while (curr != null) {
+      if (lastSorted.val <= curr.val) {
+        lastSorted = lastSorted.next;
+      } else {
+        ListNode prev = dummy;
+        while (prev.next.val <= curr.val) {
+          prev = prev.next;
+        }
+        lastSorted.next = curr.next;
+        curr.next = prev.next;
+        prev.next = curr;
+      }
+      curr = lastSorted.next;
+    }
+    return dummy.next;
+  }
+}
+```
