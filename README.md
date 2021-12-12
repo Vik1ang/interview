@@ -2,8 +2,8 @@
 
 - [interview](#interview)
   - [Algorithm](#algorithm)
-  - [LinkedList](#linkedlist)
+    - [LinkedList](#linkedlist)
 
 ## Algorithm
 
-## [LinkedList](algorithm/src/main/java/dataStructure/linkedList/README.md)
+### [LinkedList](algorithm/src/main/java/dataStructure/linkedList/README.md)
