@@ -10,6 +10,8 @@
     - [q142. 链表环的起点](#q142-链表环的起点)
     - [q160. 两个链表是否相交](#q160-两个链表是否相交)
     - [q206. 反转链表](#q206-反转链表)
+    - [反转链表前 N 个节点](#反转链表前-n-个节点)
+    - [q92. 反转链表 II](#q92-反转链表-ii)
     - [q2. 两数相加](#q2-两数相加)
     - [q445. 两数相加 II](#q445-两数相加-ii)
     - [剑指 Offer 06. 从尾到头打印链表](#剑指-offer-06-从尾到头打印链表)
@@ -347,6 +349,102 @@ public class Solution {
             curr = next;
         }
         return prev;
+    }
+}
+```
+
+**递归反转链表**
+
+`reverse` 函数定义: 输入一个节点 `head`, 将 **以 `head` 为起点** 的链表反转, 并返回反转之后的头结点
+
+`ListNode last = reverse(head.next);`
+
+![](https://labuladong.gitee.io/algo/images/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/2.jpg)
+![](https://labuladong.gitee.io/algo/images/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/3.jpg)
+![](https://labuladong.gitee.io/algo/images/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/4.jpg)
+
+```java
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode last = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return last;
+    }
+}
+```
+
+### 反转链表前 N 个节点
+
+```java
+// 将链表的前 n 个节点反转（n <= 链表长度）
+ListNode reverseN(ListNode head, int n)
+```
+`reverseN(head, 3)`
+![](https://labuladong.gitee.io/algo/images/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/6.jpg)
+
+```java
+public class Solution {
+    public ListNode successor = null; // 后驱节点
+
+    // 反转以 head 为起点的 n 个节点, 返回新的头结点
+    public ListNode reverseN(ListNode head, int n) {
+        if (n == 1) {
+            // 记录第 n + 1 个节点
+            successor = head.next;
+            return head;
+        }
+        // 以 head.next 为起点，需要反转前 n - 1 个节点
+        ListNode last = reverseN(head.next, n - 1);
+
+        head.next.next = head;
+        // 让反转之后的 head 节点和后面的节点连起来
+        head.next = successor;
+        return last;
+    }
+}
+```
+
+1. base case 变为 `n == 1`, 反转一个元素，就是它本身, 同时要记录后驱节点
+2. 刚才我们直接把 `head.next` 设置为 `null`, 因为整个链表反转后原来的 head 变成了整个链表的最后一个节点; 但现在 `head` 节点在递归反转之后不一定是最后一个节点了, 所以要记录后驱 `successor(第 n + 1 个节点)`, 反转之后将 head 连接上
+
+### [q92. 反转链表 II](https://leetcode-cn.com/problems/reverse-linked-list-ii/)
+
+如果 `m == 1`，就相当于反转链表开头的 `n` 个元素嘛, 也就是 [反转链表前 N 个节点](#反转链表前-n-个节点) 实现的功能
+
+如果 `m != 1`, 如果我们把 `head` 的索引视为 `1`, 那么我们是想从第 `m` 个元素开始反转, 如果把 `head.next` 的索引视为 `1`, 那么相对于 `head.next`, 反转的区间应该是从第 `m - 1` 个元素开始的
+
+```java
+public class Solution {
+    public ListNode successor = null; // 后驱节点
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (left == 1) {
+            return reverseN(head, right);
+        }
+        // 前进到反转的起点触发 base case
+        head.next = reverseBetween(head.next, left - 1, right - 1);
+        return head;
+    }
+
+    // 反转以 head 为起点的 n 个节点, 返回新的头结点
+    public ListNode reverseN(ListNode head, int n) {
+        if (n == 1) {
+            // 记录第 n + 1 个节点
+            successor = head.next;
+            return head;
+        }
+        // 以 head.next 为起点，需要反转前 n - 1 个节点
+        ListNode last = reverseN(head.next, n - 1);
+
+        head.next.next = head;
+        // 让反转之后的 head 节点和后面的节点连起来
+        head.next = successor;
+        return last;
     }
 }
 ```
@@ -740,3 +838,4 @@ public class Solution {
     }
 }
 ```
+
