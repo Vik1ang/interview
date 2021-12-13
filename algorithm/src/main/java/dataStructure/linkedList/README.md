@@ -19,7 +19,8 @@
     - [q203. 移除链表元素](#q203-移除链表元素)
     - [面试题 02.02. 返回倒数第 k 个节点](#面试题-0202-返回倒数第-k-个节点)
     - [q24. 两两交换链表中的节点](#q24-两两交换链表中的节点)
-    - [](#)
+    - [q147. 对链表进行插入排序](#q147-对链表进行插入排序)
+    - [q148. 排序链表](#q148-排序链表)
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
@@ -633,7 +634,7 @@ public class Solution {
 
 ```
 
-### []()
+### [q147. 对链表进行插入排序](https://leetcode-cn.com/problems/insertion-sort-list/)
 
 1. 创建哑节点 `dummyHead`, 令 `dummyHead.next = head`; 引入哑节点是为了便于在 `head` 节点之前插入节点
 2. 维护 `lastSorted` 为链表的已排序部分的最后一个节点, 初始时 `lastSorted = head`
@@ -643,7 +644,7 @@ public class Solution {
    + 否则, 从链表的头节点开始往后遍历链表中的节点m, 寻找插入 curr 的位置; 令 `prev` 为插入 `curr` 的位置的前一个节点
 5. 令 `curr = lastSorted.next`, 此时 curr 为下一个待插入的元素
 6. 重复第 5 步和第 6 步, 直到 curr 变成空, 排序结束
-  
+
 ![](https://assets.leetcode-cn.com/solution-static/147/1.png)
 ![](https://assets.leetcode-cn.com/solution-static/147/5.png)
 ![](https://assets.leetcode-cn.com/solution-static/147/6.png)
@@ -674,5 +675,68 @@ public class Solution {
     }
     return dummy.next;
   }
+}
+```
+
+### [q148. 排序链表](https://leetcode-cn.com/problems/sort-list/)
+
+参考 [q147. 对链表进行插入排序](#q147-对链表进行插入排序)
+
+更好的复杂度, 类似 `merge sort`
+
+```java
+public class Solution {
+    public ListNode sortList(ListNode head) {
+        return sortList(head, null);
+    }
+
+    private ListNode sortList(ListNode head, ListNode tail) {
+        if (head == null) {
+            return head;
+        }
+        if (head.next == tail) {
+            head.next = null;
+            return head;
+        }
+
+        ListNode slow = head, fast = head;
+        while (fast != tail) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast != tail) {
+                fast = fast.next;
+            }
+        }
+
+        ListNode mid = slow;
+        ListNode list1 = sortList(head, mid);
+        ListNode list2 = sortList(mid, tail);
+        ListNode sorted = merge(list1, list2);
+        return sorted;
+    }
+
+    private ListNode merge(ListNode head1, ListNode head2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = dummy, temp1 = head1, temp2 = head2;
+
+        while (temp1 != null && temp2 != null) {
+            if (temp1.val <= temp2.val) {
+                temp.next = temp1;
+                temp1 = temp1.next;
+            } else {
+                temp.next = temp2;
+                temp2 = temp2.next;
+            }
+            temp = temp.next;
+        }
+
+        if (temp1 != null) {
+            temp.next = temp1;
+        } else if (temp2 != null) {
+            temp.next = temp2;
+        }
+
+        return dummy.next;
+    }
 }
 ```
