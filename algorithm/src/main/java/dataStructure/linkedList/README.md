@@ -26,6 +26,7 @@
     - [q143. 重排链表](#q143-重排链表)
     - [61. 旋转链表](#61-旋转链表)
     - [q25. K 个一组翻转链表](#q25-k-个一组翻转链表)
+    - [q234. 回文链表](#q234-回文链表)
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
@@ -1043,6 +1044,115 @@ public class Solution {
         }
 
         return prev;
+    }
+}
+```
+
+### [q234. 回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/)
+
+![](https://labuladong.gitee.io/algo/images/%e5%9b%9e%e6%96%87%e9%93%be%e8%a1%a8/1.gif)
+
+```java
+public class Solution {
+
+    ListNode left;
+
+    public boolean isPalindrome(ListNode head) {
+        left = head;
+        return traverse(head);
+    }
+
+    private boolean traverse(ListNode right) {
+        if (right == null) {
+            return true;
+        }
+        boolean res = traverse(right.next);
+        // 后序遍历代码
+        res = res && (right.val == left.val);
+        left = left.next;
+        return res;
+    }
+}
+```
+
+优化空间复杂度
+
+1. 先通过 **双指针技巧** 中的快慢指针来找到链表的中点:
+
+```java
+ListNode slow, fast;
+slow = fast = head;
+while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+}
+// slow 指针现在指向链表中点
+```
+
+![](https://labuladong.gitee.io/algo/images/%e5%9b%9e%e6%96%87%e9%93%be%e8%a1%a8/1.jpg)
+
+2. 如果`fast`指针没有指向`null`, 说明链表长度为奇数, `slow`还要再前进一步:
+
+```java
+if (fast != null)
+    slow = slow.next;
+```
+
+![](https://labuladong.gitee.io/algo/images/%e5%9b%9e%e6%96%87%e9%93%be%e8%a1%a8/2.jpg)
+
+3. 从`slow`开始反转后面的链表, 现在就可以开始比较回文串了:
+
+```java
+ListNode left = head;
+ListNode right = reverse(slow);
+
+while (right != null) {
+    if (left.val != right.val)
+        return false;
+    left = left.next;
+    right = right.next;
+}
+return true;
+```
+
+![](https://labuladong.gitee.io/algo/images/%e5%9b%9e%e6%96%87%e9%93%be%e8%a1%a8/3.jpg)
+
+![](https://labuladong.gitee.io/algo/images/kgroup/8.gif)
+
+```java
+public class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow, fast;
+        slow = fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        if (fast != null)
+            slow = slow.next;
+
+        ListNode left = head;
+        ListNode right = reverse(slow);
+        while (right != null) {
+            if (left.val != right.val)
+                return false;
+            left = left.next;
+            right = right.next;
+        }
+
+        return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode pre = null, cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
     }
 }
 ```
