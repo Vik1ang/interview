@@ -27,6 +27,7 @@
     - [61. 旋转链表](#61-旋转链表)
     - [q25. K 个一组翻转链表](#q25-k-个一组翻转链表)
     - [q234. 回文链表](#q234-回文链表)
+    - [q328. 奇偶链表](#q328-奇偶链表)
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
@@ -1153,6 +1154,35 @@ public class Solution {
             cur = next;
         }
         return pre;
+    }
+}
+```
+
+### [q328. 奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/)
+
+原地修改
+
+![](https://assets.leetcode-cn.com/solution-static/328/1.png)
+
+拆成奇偶两条列表
+
+```java
+public class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+
+        ListNode evenHead = head.next;
+        ListNode odd = head, even = evenHead;
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        return head;
     }
 }
 ```
