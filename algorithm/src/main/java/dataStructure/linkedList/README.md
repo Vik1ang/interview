@@ -23,6 +23,7 @@
     - [q24. 两两交换链表中的节点](#q24-两两交换链表中的节点)
     - [q147. 对链表进行插入排序](#q147-对链表进行插入排序)
     - [q148. 排序链表](#q148-排序链表)
+    - [q143. 重排链表](#q143-重排链表)
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
@@ -863,3 +864,98 @@ public class Solution {
 }
 ```
 
+### [q143. 重排链表](https://leetcode-cn.com/problems/reorder-list/)
+
+利用线性表对链表下标进行储存
+
+然后按照规律重新连接链表
+
+```java
+public class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        ArrayList<ListNode> listNodes = new ArrayList<>();
+        ListNode p = head;
+        while (p != null) {
+            listNodes.add(p);
+            p = p.next;
+        }
+        int n = listNodes.size() - 1;
+        int i = 0;
+        while (i < n) {
+            listNodes.get(i).next = listNodes.get(n);
+            i++;
+            if (i == n) {
+                break;
+            }
+            listNodes.get(n).next = listNodes.get(i);
+            n--;
+        }
+        listNodes.get(i).next = null;
+    }
+}
+```
+
+寻找链表中点 + 链表逆序 + 合并链表
+
+注意到目标链表即为将原链表的左半端和反转后的右半端合并后的结果
+
+[q876. 链表的中间结点](#q876-链表的中间结点)
+[q206. 反转链表](#q206-反转链表)
+
+```java
+public class Solution {
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        ListNode mid = middleNode(head);
+        ListNode l1 = head;
+        ListNode l2 = mid.next;
+        mid.next = null;
+        l2 = reverseList(l2);
+        mergeList(l1, l2);
+    }
+
+    private void mergeList(ListNode l1, ListNode l2) {
+        ListNode l1_tmp;
+        ListNode l2_tmp;
+        while (l1 != null && l2 != null) {
+            l1_tmp = l1.next;
+            l2_tmp = l2.next;
+
+            l1.next = l2;
+            l1 = l1_tmp;
+
+            l2.next = l1;
+            l2 = l2_tmp;
+        }
+    }
+
+    private ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    private ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+}
+```
