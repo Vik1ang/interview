@@ -25,6 +25,7 @@
     - [q148. 排序链表](#q148-排序链表)
     - [q143. 重排链表](#q143-重排链表)
     - [61. 旋转链表](#61-旋转链表)
+    - [q25. K 个一组翻转链表](#q25-k-个一组翻转链表)
 
 ### [q21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/submissions/)
 
@@ -993,6 +994,55 @@ public class Solution {
         iter.next = null;
 
         return res;
+    }
+}
+```
+
+### [q25. K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
+
+![](https://labuladong.gitee.io/algo/images/kgroup/8.gif)
+![](https://labuladong.gitee.io/algo/images/kgroup/6.jpg)
+![](https://labuladong.gitee.io/algo/images/kgroup/7.jpg)
+
+```java
+public class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        if (head == null) {
+            return head;
+        }
+
+        ListNode left, right;
+        left = right = head;
+
+        for (int i = 0; i < k; i++) {
+            // 不足 k 个, 不需要反转，base case
+            if (right == null) {
+                return head;
+            }
+            right = right.next;
+        }
+
+        // 反转前 k 个元素
+        ListNode newHead = reverse(left, right);
+
+        // 递归反转后续链表并连接起来
+        left.next = reverseKGroup(right, k);
+
+        return newHead;
+    }
+
+    private ListNode reverse(ListNode left, ListNode right) {
+        ListNode prev = null, curr = left, next = left;
+
+        while (curr != right) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
     }
 }
 ```
