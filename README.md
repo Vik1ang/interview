@@ -2,8 +2,11 @@
 
 - [interview](#interview)
   - [Algorithm](#algorithm)
-    - [LinkedList](#linkedlist)
+    - [Linked List](#linked-list)
+    - [Binary Tree](#binary-tree)
 
 ## Algorithm
 
-### [LinkedList](algorithm/src/main/java/dataStructure/linkedList/README.md)
+### [Linked List](algorithm/src/main/java/dataStructure/linkedList/README.md)
+
+### [Binary Tree](algorithm/src/main/java/dataStructure/binaryTree/README.md)
