@@ -8,6 +8,7 @@
     - [q105. 从前序与中序遍历序列构造二叉树](#q105-从前序与中序遍历序列构造二叉树)
     - [q106. 从中序与后序遍历序列构造二叉树](#q106-从中序与后序遍历序列构造二叉树)
     - [q652. 寻找重复的子树](#q652-寻找重复的子树)
+    - [q230. 二叉搜索树中第K小的元素](#q230-二叉搜索树中第k小的元素)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -444,6 +445,40 @@ public class Solution {
         // 给子树对应的出现次数加一
         memo.put(subTree, freq + 1);
         return subTree;
+    }
+}
+```
+
+### [q230. 二叉搜索树中第K小的元素](https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/)
+
+**BST 的中序遍历结果是有序的(升序)**
+
+```java
+public class Solution {
+    public int res = 0;
+    public int rank = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        // 利用 BST 的中序遍历特性
+        traverse(root, k);
+        return res;
+    }
+
+    private void traverse(TreeNode root, int k) {
+        if (root == null) {
+            return;
+        }
+        traverse(root.left, k);
+
+        // 中序遍历代码位置
+        rank++;
+        if (k == rank) {
+            // 找到第 k 小的元素
+            res = root.val;
+            return;
+        }
+
+        traverse(root.right, k);
+
     }
 }
 ```
