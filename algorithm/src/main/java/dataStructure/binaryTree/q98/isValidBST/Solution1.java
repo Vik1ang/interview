@@ -1,8 +1,8 @@
-package dataStructure.binaryTree.isValidBST;
+package dataStructure.binaryTree.q98.isValidBST;
 
 import dataStructure.binaryTree.TreeNode;
 
-public class Solution {
+public class Solution1 {
     public boolean isValidBST(TreeNode root) {
         return isValidBST(root, null, null);
     }

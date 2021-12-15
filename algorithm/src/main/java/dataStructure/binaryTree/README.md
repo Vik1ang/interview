@@ -12,8 +12,10 @@
     - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
     - [q1038. 把二叉搜索树转换为累加树](#q1038-把二叉搜索树转换为累加树)
     - [判断 BST 的合法性](#判断-bst-的合法性)
+    - [98. 验证二叉搜索树](#98-验证二叉搜索树)
     - [q700. 二叉搜索树中的搜索](#q700-二叉搜索树中的搜索)
     - [q701. 二叉搜索树中的插入操作](#q701-二叉搜索树中的插入操作)
+    - [450. 删除二叉搜索树中的节点](#450-删除二叉搜索树中的节点)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -547,6 +549,62 @@ public class Solution {
 }
 ```
 
+### [98. 验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/)
+
+```java
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, null, null);
+    }
+
+    private boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
+        // base case
+        if (root == null) {
+            return true;
+        }
+
+        // 若 root.val 不符合 max 和 min 的限制, 说明不是合法 BST
+        if (min != null && root.val <= min.val) {
+            return false;
+        }
+        if (max != null && root.val >= max.val) {
+            return false;
+        }
+
+        // 限定左子树的最大值是 root.val, 右子树的最小值是 root.val
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+}
+```
+
+迭代
+
+中序遍历
+
+```java
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        double inorder = -Double.MAX_VALUE;
+
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            // 如果中序遍历得到的节点的值小于等于前一个 inorder, 说明不是二叉搜索树
+            if (root.val <= inorder) {
+                return false;
+            }
+            inorder = root.val;
+            root = root.right;
+        }
+        return true;
+    }
+}
+```
+
 ### [q700. 二叉搜索树中的搜索](https://leetcode-cn.com/problems/search-in-a-binary-search-tree/)
 
 递归
@@ -638,6 +696,54 @@ public class Solution {
                     curr = curr.right;
                 }
             }
+        }
+        return root;
+    }
+}
+```
+
+### [450. 删除二叉搜索树中的节点](https://leetcode-cn.com/problems/delete-node-in-a-bst/)
+
+![](https://labuladong.gitee.io/algo/images/BST/bst_deletion_case_1.png)
+![](https://labuladong.gitee.io/algo/images/BST/bst_deletion_case_2.png)
+![](https://labuladong.gitee.io/algo/images/BST/bst_deletion_case_3.png)
+
+```java
+public class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return root;
+        }
+
+        if (root.val == key) {
+            if (root.left == null) {
+                return root.right;
+            }
+            if (root.right == null) {
+                return root.left;
+            }
+
+            // 获得右子树最小的节点
+            TreeNode minNode = getMin(root.right);
+            // 删除右子树最小的节点
+            root.right = deleteNode(root.right, minNode.val);
+            // 用右子树最小的节点替换 root 节点
+            minNode.left = root.left;
+            minNode.right = root.right;
+            root = minNode;
+        } else if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        }
+
+        return root;
+    }
+
+    private TreeNode getMin(TreeNode root) {
+        // BST 最左边的就是最小的
+        while (root.left != null) {
+            root = root.left;
         }
         return root;
     }
