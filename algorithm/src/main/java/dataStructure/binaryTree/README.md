@@ -6,7 +6,8 @@
     - [](#)
     - [q654. 最大二叉树](#q654-最大二叉树)
     - [q105. 从前序与中序遍历序列构造二叉树](#q105-从前序与中序遍历序列构造二叉树)
-    - [](#-1)
+    - [q106. 从中序与后序遍历序列构造二叉树](#q106-从中序与后序遍历序列构造二叉树)
+    - [q652. 寻找重复的子树](#q652-寻找重复的子树)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -337,7 +338,7 @@ public class Solution {
 }
 ```
 
-### []()
+### [q106. 从中序与后序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
 
 ![](https://labuladong.gitee.io/algo/images/%e4%ba%8c%e5%8f%89%e6%a0%91%e7%b3%bb%e5%88%972/5.jpeg)
 
@@ -403,6 +404,46 @@ public class Solution2 {
             }
         }
         return root;
+    }
+}
+```
+
+### [q652. 寻找重复的子树](https://leetcode-cn.com/problems/find-duplicate-subtrees/)
+
+
+后序遍历
+
+```java
+public class Solution {
+
+    // 记录所有子树
+    HashMap<String, Integer> memo = new HashMap<>();
+    // 记录重复的子树根节点
+    LinkedList<TreeNode> res = new LinkedList<>();
+
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        traverse(root);
+        return res;
+    }
+
+    private String traverse(TreeNode root) {
+        if (root == null) {
+            return "#";
+        }
+
+        String left = traverse(root.left);
+        String right = traverse(root.right);
+
+        String subTree = left + "," + right + "," + root.val;
+
+        int freq = memo.getOrDefault(subTree, 0);
+        // 多次重复也只会被加入结果集一次
+        if (freq == 1) {
+            res.add(root);
+        }
+        // 给子树对应的出现次数加一
+        memo.put(subTree, freq + 1);
+        return subTree;
     }
 }
 ```
