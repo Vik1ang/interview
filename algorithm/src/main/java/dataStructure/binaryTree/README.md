@@ -11,6 +11,7 @@
     - [q230. 二叉搜索树中第K小的元素](#q230-二叉搜索树中第k小的元素)
     - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
     - [q1038. 把二叉搜索树转换为累加树](#q1038-把二叉搜索树转换为累加树)
+    - [判断 BST 的合法性](#判断-bst-的合法性)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -515,3 +516,31 @@ public class Solution {
 ### [q1038. 把二叉搜索树转换为累加树](https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/)
 
 同 [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
+
+### 判断 BST 的合法性
+
+```java
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValidBST(root, null, null);
+    }
+
+    private boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
+        // base case
+        if (root == null) {
+            return true;
+        }
+
+        // 若 root.val 不符合 max 和 min 的限制, 说明不是合法 BST
+        if (min != null && root.val <= min.val) {
+            return false;
+        }
+        if (max != null && root.val >= max.val) {
+            return false;
+        }
+
+        // 限定左子树的最大值是 root.val, 右子树的最小值是 root.val
+        return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+}
+```
