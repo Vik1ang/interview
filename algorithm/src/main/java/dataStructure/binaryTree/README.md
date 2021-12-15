@@ -13,6 +13,7 @@
     - [q1038. 把二叉搜索树转换为累加树](#q1038-把二叉搜索树转换为累加树)
     - [判断 BST 的合法性](#判断-bst-的合法性)
     - [q700. 二叉搜索树中的搜索](#q700-二叉搜索树中的搜索)
+    - [q701. 二叉搜索树中的插入操作](#q701-二叉搜索树中的插入操作)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -583,6 +584,62 @@ public class Solution {
             root = val < root.val ? root.left : root.right;
         }
         return null;
+    }
+}
+```
+
+### [q701. 二叉搜索树中的插入操作](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/)
+
+递归
+
+```java
+public class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+
+        // BST 中一般不会插入已存在元素
+        if (root.val < val) {
+            root.right = insertIntoBST(root.right, val);
+        }
+        if (root.val > val) {
+            root.left = insertIntoBST(root.left, val);
+        }
+
+        return root;
+    }
+}
+```
+
+迭代
+
+```java
+public class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+
+        TreeNode curr = root;
+        while (curr != null) {
+            if (curr.val > val) {
+                if (curr.left == null) {
+                    curr.left = new TreeNode(val);
+                    break;
+                } else {
+                    curr = curr.left;
+                }
+            } else {
+                if (curr.right == null) {
+                    curr.right = new TreeNode(val);
+                    break;
+                } else {
+                    curr = curr.right;
+                }
+            }
+        }
+        return root;
     }
 }
 ```
