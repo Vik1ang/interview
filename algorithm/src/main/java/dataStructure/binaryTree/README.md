@@ -16,6 +16,8 @@
     - [q700. 二叉搜索树中的搜索](#q700-二叉搜索树中的搜索)
     - [q701. 二叉搜索树中的插入操作](#q701-二叉搜索树中的插入操作)
     - [450. 删除二叉搜索树中的节点](#450-删除二叉搜索树中的节点)
+    - [q96. 不同的二叉搜索树](#q96-不同的二叉搜索树)
+    - [q95. 不同的二叉搜索树 II](#q95-不同的二叉搜索树-ii)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -746,6 +748,92 @@ public class Solution {
             root = root.left;
         }
         return root;
+    }
+}
+```
+
+### [q96. 不同的二叉搜索树](https://leetcode-cn.com/problems/unique-binary-search-trees/)
+
+[1,2,3], 固定3
+
+![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/gibkIz0MVqdFsfcAAK8DGTzPM7psSLiaqqicDN8E0YqcgjGcc6wIGKJkV0mUh6wRh2nDMdCTe4Qkoic6xnIjeknCqA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+```java
+public class Solution {
+    public int[][] memo;
+
+    public int numTrees(int n) {
+        memo = new int[n + 1][n + 1];
+        return count(1, n);
+    }
+
+    private int count(int lo, int hi) {
+        if (lo > hi) {
+            return 1;
+        }
+
+        // 查备忘录
+        if (memo[lo][hi] != 0) {
+            return memo[lo][hi];
+        }
+
+        int res = 0;
+
+        for (int mid = lo; mid <= hi; mid++) {
+            int left = count(lo, mid - 1);
+            int right = count(mid + 1, hi);
+            res += left * right;
+        }
+
+        // 将结果存入备忘录
+        memo[lo][hi] = res;
+
+        return res;
+    }
+}
+```
+
+### [q95. 不同的二叉搜索树 II](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/)
+
+类似[q96. 不同的二叉搜索树](#q96-不同的二叉搜索树)
+
+```java
+public class Solution1 {
+    public List<TreeNode> generateTrees(int n) {
+        if (n == 0) {
+            return new LinkedList<>();
+        }
+        return build(1, n);
+    }
+
+    // 构造闭区间 [lo, hi] 组成的 BST
+    private List<TreeNode> build(int lo, int hi) {
+        List<TreeNode> res = new LinkedList<>();
+
+        // base case
+        if (lo > hi) {
+            res.add(null);
+            return res;
+        }
+
+        // 1. 穷举 root 节点的所有可能
+        for (int i = lo; i <= hi; i++) {
+            // 2. 递归构造出左右子树的所有合法 BST
+            List<TreeNode> leftTree = build(lo, i - 1);
+            List<TreeNode> rightTree = build(i + 1, hi);
+            // 3. 给 root 节点穷举所有左右子树的组合
+            for (TreeNode left : leftTree) {
+                for (TreeNode right : rightTree) {
+                    // i 作为根节点 root 的值
+                    TreeNode root = new TreeNode(i);
+                    root.left = left;
+                    root.right = right;
+                    res.add(root);
+                }
+            }
+        }
+
+        return res;
     }
 }
 ```
