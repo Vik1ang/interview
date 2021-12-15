@@ -12,6 +12,7 @@
     - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
     - [q1038. 把二叉搜索树转换为累加树](#q1038-把二叉搜索树转换为累加树)
     - [判断 BST 的合法性](#判断-bst-的合法性)
+    - [q700. 二叉搜索树中的搜索](#q700-二叉搜索树中的搜索)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -541,6 +542,47 @@ public class Solution {
 
         // 限定左子树的最大值是 root.val, 右子树的最小值是 root.val
         return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+    }
+}
+```
+
+### [q700. 二叉搜索树中的搜索](https://leetcode-cn.com/problems/search-in-a-binary-search-tree/)
+
+递归
+
+```java
+public class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) {
+            return root;
+        }
+
+        // 去左子树搜索
+        if (root.val > val) {
+            return searchBST(root.left, val);
+        }
+
+        // 去右子树搜索
+        if (root.val < val) {
+            return searchBST(root.right, val);
+        }
+        return root;
+    }
+}
+```
+
+迭代
+
+```java
+public class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        while (root != null) {
+            if (val == root.val) {
+                return root;
+            }
+            root = val < root.val ? root.left : root.right;
+        }
+        return null;
     }
 }
 ```
