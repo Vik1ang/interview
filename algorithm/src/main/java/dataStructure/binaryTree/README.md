@@ -9,6 +9,8 @@
     - [q106. 从中序与后序遍历序列构造二叉树](#q106-从中序与后序遍历序列构造二叉树)
     - [q652. 寻找重复的子树](#q652-寻找重复的子树)
     - [q230. 二叉搜索树中第K小的元素](#q230-二叉搜索树中第k小的元素)
+    - [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
+    - [q1038. 把二叉搜索树转换为累加树](#q1038-把二叉搜索树转换为累加树)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -482,3 +484,34 @@ public class Solution {
     }
 }
 ```
+
+### [538. 把二叉搜索树转换为累加树](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/)
+
+递归顺序改一下, 利用BST的中序遍历
+
+```java
+public class Solution {
+    public int sum = 0;
+
+    public TreeNode convertBST(TreeNode root) {
+        traverse(root);
+        return root;
+    }
+
+    private void traverse(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        traverse(root.right);
+        // 维护累加和
+        sum += root.val;
+        // 将 BST 转化成累加树
+        root.val = sum;
+        traverse(root.left);
+    }
+}
+```
+
+### [q1038. 把二叉搜索树转换为累加树](https://leetcode-cn.com/problems/binary-search-tree-to-greater-sum-tree/)
+
+同 [538. 把二叉搜索树转换为累加树](#538-把二叉搜索树转换为累加树)
