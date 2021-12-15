@@ -19,6 +19,7 @@
     - [q96. 不同的二叉搜索树](#q96-不同的二叉搜索树)
     - [q95. 不同的二叉搜索树 II](#q95-不同的二叉搜索树-ii)
     - [1373. 二叉搜索子树的最大键值和](#1373-二叉搜索子树的最大键值和)
+    - [q297. 二叉树的序列化与反序列化](#q297-二叉树的序列化与反序列化)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -892,6 +893,199 @@ public class Solution1 {
         }
 
         return res;
+    }
+
+}
+```
+
+### [q297. 二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/)
+
+前序遍历
+
+```java
+public class Codec {
+
+    String SEP = ",";
+    String NULL = "#";
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serialize(root, sb);
+
+        return sb.toString();
+    }
+
+    private void serialize(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append(NULL).append(SEP);
+            return;
+        }
+        // 前序遍历位置
+        sb.append(root.val).append(SEP);
+
+        serialize(root.left, sb);
+        serialize(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        LinkedList<String> nodes = new LinkedList<>();
+        for (String s : data.split(SEP)) {
+            nodes.addLast(s);
+        }
+        return deserialize(nodes);
+    }
+
+    private TreeNode deserialize(LinkedList<String> nodes) {
+        if (nodes.isEmpty()) {
+            return null;
+        }
+
+        // 前序遍历位置
+        String first = nodes.removeFirst();
+        if (first.equals(NULL)) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(Integer.parseInt(first));
+
+        root.left = deserialize(nodes);
+        root.right = deserialize(nodes);
+
+        return root;
+    }
+}
+```
+
+后序遍历
+
+```java
+public class Codec {
+    String SEP = ",";
+    String NULL = "#";
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serialize(root, sb);
+
+        return sb.toString();
+    }
+
+    private void serialize(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append(NULL).append(SEP);
+            return;
+        }
+
+        serialize(root.left, sb);
+        serialize(root.right, sb);
+
+        // 后序遍历位置
+        sb.append(root.val).append(SEP);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        LinkedList<String> nodes = new LinkedList<>();
+        for (String s : data.split(SEP)) {
+            nodes.addLast(s);
+        }
+        return deserialize(nodes);
+    }
+
+    private TreeNode deserialize(LinkedList<String> nodes) {
+        if (nodes.isEmpty()) {
+            return null;
+        }
+
+        String last = nodes.removeLast();
+        if (last.equals(NULL)) {
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(last));
+
+        root.right = deserialize(nodes);
+        root.left = deserialize(nodes);
+
+        return root;
+    }
+}
+```
+
+没有办法 中序遍历
+
+层级遍历
+
+```java
+public class Codec {
+
+    String SEP = ",";
+    String NULL = "#";
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if (root == null) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+
+            // 层级遍历代码位置
+            if (curr == null) {
+                sb.append(NULL).append(SEP);
+                continue;
+            }
+            sb.append(curr.val).append(SEP);
+
+            queue.offer(curr.left);
+            queue.offer(curr.right);
+        }
+
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()) {
+            return null;
+        }
+
+        String[] nodes = data.split(SEP);
+
+        TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
+
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        for (int i = 1; i < nodes.length; ) {
+            // 队列中存的都是父节点
+            TreeNode parent = queue.poll();
+            // 父节点对应的左侧子节点的值
+            String left = nodes[i++];
+            if (!left.equals(NULL)) {
+                parent.left = new TreeNode(Integer.parseInt(left));
+                queue.offer(parent.left);
+            } else {
+                parent.left = null;
+            }
+
+            // 父节点对应的右侧子节点的值
+            String right = nodes[i++];
+            if (!right.equals(NULL)) {
+                parent.right = new TreeNode(Integer.parseInt(right));
+                queue.offer(parent.right);
+            } else {
+                parent.right = null;
+            }
+        }
+
+        return root;
     }
 
 }
