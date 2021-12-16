@@ -12,6 +12,7 @@
     - [q990. 等式方程的可满足性](#q990-等式方程的可满足性)
     - [1135. 最低成本联通所有城市](#1135-最低成本联通所有城市)
     - [1584. 连接所有点的最小费用](#1584-连接所有点的最小费用)
+    - [q277. 搜寻名人](#q277-搜寻名人)
 
 ### [图的遍历]()
 
@@ -665,6 +666,40 @@ public class Solution {
         }
 
         return mst;
+    }
+}
+```
+
+### [q277. 搜寻名人](https://leetcode-cn.com/problems/find-the-celebrity/)
+
+```java
+public class Solution extends Relation {
+    public int findCelebrity(int n) {
+        // 先假设 cand 是名人
+        int candidate = 0;
+        for (int other = 0; other < n; other++) {
+            if (!knows(other, candidate) || knows(candidate, other)) {
+                // cand 不可能是名人，排除
+                // 假设 other 是名人
+                candidate = other;
+            } else {
+                // other 不可能是名人，排除
+                // 什么都不用做，继续假设 cand 是名人
+            }
+        }
+
+        // 现在的 cand 是排除的最后结果，但不能保证一定是名人
+        for (int other = 0; other < n; other++) {
+            if (candidate == other) {
+                continue;
+            }
+            // 需要保证其他人都认识 cand，且 cand 不认识任何其他人
+            if (!knows(other, candidate) || knows(candidate, other)) {
+                return -1;
+            }
+        }
+
+        return candidate;
     }
 }
 ```
