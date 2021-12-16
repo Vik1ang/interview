@@ -1,6 +1,6 @@
 package dataStructure.graph.q990.equationsPossible;
 
-import dataStructure.graph.q130.solve.UnionFind;
+import dataStructure.graph.UnionFind;
 
 public class Solution1 {
     public boolean equationsPossible(String[] equations) {

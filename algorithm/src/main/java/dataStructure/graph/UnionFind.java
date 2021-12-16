@@ -1,4 +1,4 @@
-package dataStructure.graph.q130.solve;
+package dataStructure.graph;
 
 public class UnionFind {
     // 记录连通分量个数

@@ -1,5 +1,7 @@
 package dataStructure.graph.q130.solve;
 
+import dataStructure.graph.UnionFind;
+
 public class Solution1 {
     public void solve(char[][] board) {
         if (board.length == 0) {
