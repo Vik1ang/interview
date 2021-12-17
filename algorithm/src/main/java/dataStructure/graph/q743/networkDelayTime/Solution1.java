@@ -1,7 +1,5 @@
 package dataStructure.graph.q743.networkDelayTime;
 
-import dataStructure.graph.State;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

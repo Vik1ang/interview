@@ -1,4 +1,4 @@
-package dataStructure.graph;
+package dataStructure.graph.q743.networkDelayTime;
 
 public class State {
     // 图节点的 id
