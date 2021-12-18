@@ -7,6 +7,7 @@
     - [Graph](#graph)
     - [Least Recently Used](#least-recently-used)
     - [Least Frequently Used](#least-frequently-used)
+    - [Max Stack](#max-stack)
 
 ## Algorithm
 
@@ -19,3 +20,5 @@
 ### [Least Recently Used](algorithm/src/main/java/dataStructure/leastRecentlyUsed/README.md)
 
 ### [Least Frequently Used](algorithm/src/main/java/dataStructure/leastFrequentlyUsed/README.md)
+
+### [Max Stack](algorithm/src/main/java/dataStructure/maxStack/README.md)
