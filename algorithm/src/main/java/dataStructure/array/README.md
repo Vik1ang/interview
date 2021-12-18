@@ -5,6 +5,11 @@
     - [q303. 区域和检索 - 数组不可变](#q303-区域和检索---数组不可变)
     - [q304. 二维区域和检索 - 矩阵不可变](#q304-二维区域和检索---矩阵不可变)
     - [q560. 和为 K 的子数组](#q560-和为-k-的子数组)
+  - [Slide Window](#slide-window)
+    - [76. 最小覆盖子串](#76-最小覆盖子串)
+    - [567. 字符串的排列](#567-字符串的排列)
+    - [438. 找到字符串中所有字母异位词](#438-找到字符串中所有字母异位词)
+    - [3. 无重复字符的最长子串](#3-无重复字符的最长子串)
 
 ## Prefix Sum
 
@@ -117,6 +122,206 @@ public class Solution {
 
             // 把前缀和 nums[0..i] 加入并记录出现次数
             preSum.put(sum0_i, preSum.getOrDefault(sum0_i, 0) + 1);
+        }
+
+        return res;
+    }
+}
+```
+
+## Slide Window
+
+### [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+
+当 `valid == need.size()` 时, 说明 `s2` 中所有字符已经被覆盖, 已经得到一个可行的覆盖子串, 现在应该开始收缩窗口了, 以便得到 **最小覆盖子串**
+
+```java
+public class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> need = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+
+        for (char c : t.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0, right = 0;
+        int valid = 0;
+
+        // 记录最小覆盖子串的起始索引及长度
+        int start = 0;
+        int length = Integer.MAX_VALUE;
+
+        while (right < s.length()) {
+            // c 是将移入窗口的字符
+            char c = s.charAt(right);
+            // 右移窗口
+            right++;
+            // 进行窗口内数据的一系列更新
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+
+            // 判断左侧窗口是否要收缩
+            while (valid == need.size()) {
+                // 在这里更新最小覆盖子串
+                if (right - left < length) {
+                    start = left;
+                    length = right - left;
+                }
+
+                // d 是将移出窗口的字符
+                char d = s.charAt(left);
+                // 左移窗口
+                left++;
+                // 进行窗口内数据的一系列更新
+                if (need.containsKey(d)) {
+                    if (window.get(d).equals(need.get(d))) {
+                        valid--;
+                    }
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+        }
+
+        return length == Integer.MAX_VALUE ? "" : s.substring(start, start + length);
+    }
+}
+```
+
+### [567. 字符串的排列](https://leetcode-cn.com/problems/permutation-in-string/)
+
+本题移动 left 缩小窗口的时机是窗口大小大于 `s1.length()` 时, 应为排列嘛, 显然长度应该是一样的
+
+```java
+HashMap<Character, Integer> window = new HashMap<>();
+        HashMap<Character, Integer> need = new HashMap<>();
+
+        for (char c : s1.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        int left = 0, right = 0;
+        int valid = 0;
+
+        while (right < s2.length()) {
+            char c = s2.charAt(right);
+            right++;
+
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+
+            while (right - left >= s1.length()) {
+                // 在这里判断是否找到了合法的子串
+                if (valid == need.size()) {
+                    return true;
+                }
+
+                char d = s2.charAt(left);
+                left++;
+
+                if (need.containsKey(d)) {
+                    if (window.get(d).equals(need.get(d))) {
+                        valid--;
+                    }
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+
+        }
+
+        return false;
+```
+
+### [438. 找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+
+```java
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        HashMap<Character, Integer> need = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+
+        for (char c : p.toCharArray()) {
+            need.put(c, need.getOrDefault(c, 0) + 1);
+        }
+
+        int left =0, right = 0;
+        int valid = 0;
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            right++;
+
+            // 进行窗口内数据的一系列更新
+            if (need.containsKey(c)) {
+                window.put(c, window.getOrDefault(c, 0) + 1);
+                if (window.get(c).equals(need.get(c))) {
+                    valid++;
+                }
+            }
+
+            // 判断左侧窗口是否要收缩
+            while (right - left >= p.length()) {
+                // 当窗口符合条件时，把起始索引加入 res
+                if (valid == need.size()) {
+                    res.add(left);
+                }
+
+                char d = s.charAt(left);
+                left++;
+
+                if (need.containsKey(d)) {
+                    if (window.get(d).equals(need.get(d))) {
+                        valid--;
+                    }
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+### [3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+```java
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+
+        HashMap<Character, Integer> window = new HashMap<>();
+
+        int left = 0, right = 0;
+        int res = 0;
+
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            right++;
+
+            window.put(c, window.getOrDefault(c, 0) + 1);
+
+            // 判断左侧窗口是否要收缩
+            while (window.get(c) > 1) {
+                char d = s.charAt(left);
+                left++;
+
+                if (window.containsKey(d)) {
+                    window.put(d, window.get(d) - 1);
+                }
+            }
+
+            res = Math.max(right - left, res);
+
         }
 
         return res;

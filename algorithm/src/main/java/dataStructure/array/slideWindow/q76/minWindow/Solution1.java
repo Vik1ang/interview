@@ -1,4 +1,4 @@
-package dataStructure.slideWindow.q76.minWindow;
+package dataStructure.array.slideWindow.q76.minWindow;
 
 import java.util.HashMap;
 

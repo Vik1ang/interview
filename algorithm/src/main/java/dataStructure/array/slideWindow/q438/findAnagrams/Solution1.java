@@ -1,29 +1,27 @@
-# Slide Window
+package dataStructure.array.slideWindow.q438.findAnagrams;
 
-### [76. 最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-```java
-public class Solution {
-    public String minWindow(String s, String t) {
+public class Solution1 {
+    public List<Integer> findAnagrams(String s, String p) {
         HashMap<Character, Integer> need = new HashMap<>();
         HashMap<Character, Integer> window = new HashMap<>();
 
-        for (char c : t.toCharArray()) {
+        for (char c : p.toCharArray()) {
             need.put(c, need.getOrDefault(c, 0) + 1);
         }
 
-        int left = 0, right = 0;
+        int left =0, right = 0;
         int valid = 0;
 
-        // 记录最小覆盖子串的起始索引及长度
-        int start = 0;
-        int length = Integer.MAX_VALUE;
+        ArrayList<Integer> res = new ArrayList<>();
 
         while (right < s.length()) {
-            // c 是将移入窗口的字符
             char c = s.charAt(right);
-            // 右移窗口
             right++;
+
             // 进行窗口内数据的一系列更新
             if (need.containsKey(c)) {
                 window.put(c, window.getOrDefault(c, 0) + 1);
@@ -33,18 +31,15 @@ public class Solution {
             }
 
             // 判断左侧窗口是否要收缩
-            while (valid == need.size()) {
-                // 在这里更新最小覆盖子串
-                if (right - left < length) {
-                    start = left;
-                    length = right - left;
+            while (right - left >= p.length()) {
+                // 当窗口符合条件时，把起始索引加入 res
+                if (valid == need.size()) {
+                    res.add(left);
                 }
 
-                // d 是将移出窗口的字符
                 char d = s.charAt(left);
-                // 左移窗口
                 left++;
-                // 进行窗口内数据的一系列更新
+
                 if (need.containsKey(d)) {
                     if (window.get(d).equals(need.get(d))) {
                         valid--;
@@ -54,7 +49,6 @@ public class Solution {
             }
         }
 
-        return length == Integer.MAX_VALUE ? "" : s.substring(start, start + length);
+        return res;
     }
 }
-```
