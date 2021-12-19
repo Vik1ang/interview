@@ -4,6 +4,8 @@
     - [46. 全排列](#46-全排列)
     - [51. N 皇后](#51-n-皇后)
     - [698. 划分为k个相等的子集](#698-划分为k个相等的子集)
+    - [78. 子集](#78-子集)
+    - [77. 组合](#77-组合)
 
 ```python
 for 选择 in 选择列表:
@@ -336,3 +338,36 @@ public class Solution3 {
     }
 }
 ```
+
+### [78. 子集](https://leetcode-cn.com/problems/subsets/)
+
+```java
+public class Solution {
+    public List<List<Integer>> res = new LinkedList<>();
+
+    public List<List<Integer>> subsets(int[] nums) {
+        // 记录走过的路径
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrack(nums, 0, track);
+        return res;
+    }
+
+    private void backtrack(int[] nums, int start, LinkedList<Integer> track) {
+        res.add(new LinkedList<>(track));
+
+        // 注意 i 从 start 开始递增
+        for (int i = start; i < nums.length; i++) {
+            // 做选择
+            track.add(nums[i]);
+            System.out.println(track);
+            // 回溯
+            backtrack(nums, i + 1, track);
+            // 撤销选择
+            track.removeLast();
+        }
+    }
+}
+```
+
+### [77. 组合](https://leetcode-cn.com/problems/combinations/)
+
