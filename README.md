@@ -8,6 +8,8 @@
     - [Least Recently Used](#least-recently-used)
     - [Least Frequently Used](#least-frequently-used)
     - [Max Stack](#max-stack)
+    - [Array](#array)
+    - [BackTracking](#backtracking)
 
 ## Algorithm
 
@@ -22,3 +24,7 @@
 ### [Least Frequently Used](algorithm/src/main/java/dataStructure/leastFrequentlyUsed/README.md)
 
 ### [Max Stack](algorithm/src/main/java/dataStructure/maxStack/README.md)
+
+### [Array](algorithm/src/main/java/dataStructure/array/README.md)
+
+### [BackTracking](algorithm/src/main/java/dataStructure/backtracking/README.md)
