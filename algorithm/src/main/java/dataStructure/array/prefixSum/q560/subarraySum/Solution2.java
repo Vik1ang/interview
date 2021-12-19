@@ -1,4 +1,4 @@
-package dataStructure.array.q560.subarraySum;
+package dataStructure.array.prefixSum.q560.subarraySum;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package dataStructure.array.q560.subarraySum;
+package dataStructure.array.prefixSum.q560.subarraySum;
 
 public class Solution1 {
     public int subarraySum(int[] nums, int k) {

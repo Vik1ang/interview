@@ -1,4 +1,4 @@
-package dataStructure.array.q303;
+package dataStructure.array.prefixSum.q303;
 
 public class NumArray {
     // 前缀和数组

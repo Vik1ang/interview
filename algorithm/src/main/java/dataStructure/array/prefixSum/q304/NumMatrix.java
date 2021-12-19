@@ -1,4 +1,4 @@
-package dataStructure.array.q304;
+package dataStructure.array.prefixSum.q304;
 
 public class NumMatrix {
     // preSum[i][j] 记录矩阵 [0, 0, i, j] 的元素和
