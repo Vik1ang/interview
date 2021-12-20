@@ -10,7 +10,7 @@
     - [Max Stack](#max-stack)
     - [Array](#array)
     - [BackTracking](#backtracking)
-    - [BFS](#bfs)
+    - [BFS/DFS](#bfsdfs)
 
 ## Algorithm
 
@@ -30,4 +30,4 @@
 
 ### [BackTracking](algorithm/src/main/java/dataStructure/backtracking/README.md)
 
-### [BFS](algorithm/src/main/java/dataStructure/bfsANDdfs/README.md)
+### [BFS/DFS](algorithm/src/main/java/dataStructure/bfsANDdfs/README.md)
