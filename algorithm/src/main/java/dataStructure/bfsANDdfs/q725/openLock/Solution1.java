@@ -1,4 +1,4 @@
-package dataStructure.bfs.q725.openLock;
+package dataStructure.bfsANDdfs.q725.openLock;
 
 import java.util.*;
 

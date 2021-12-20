@@ -1,4 +1,4 @@
-package dataStructure.bfs.q725.openLock;
+package dataStructure.bfsANDdfs.q725.openLock;
 
 public class Solution {
     public int openLock(String[] deadends, String target) {

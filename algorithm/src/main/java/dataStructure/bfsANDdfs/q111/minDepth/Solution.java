@@ -1,4 +1,4 @@
-package dataStructure.bfs.q111.minDepth;
+package dataStructure.bfsANDdfs.q111.minDepth;
 
 import dataStructure.binaryTree.TreeNode;
 

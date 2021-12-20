@@ -1,8 +1,6 @@
-package dataStructure.bfs.q725.openLock;
+package dataStructure.bfsANDdfs.q725.openLock;
 
-import java.util.Deque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 public class Solution2 {

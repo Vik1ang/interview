@@ -30,4 +30,4 @@
 
 ### [BackTracking](algorithm/src/main/java/dataStructure/backtracking/README.md)
 
-### [BFS](algorithm/src/main/java/dataStructure/bfs/README.md)
+### [BFS](algorithm/src/main/java/dataStructure/bfsANDdfs/README.md)
