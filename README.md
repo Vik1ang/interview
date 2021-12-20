@@ -11,6 +11,7 @@
     - [Array](#array)
     - [BackTracking](#backtracking)
     - [BFS/DFS](#bfsdfs)
+    - [Sorting](#sorting)
 
 ## Algorithm
 
@@ -31,3 +32,5 @@
 ### [BackTracking](algorithm/src/main/java/dataStructure/backtracking/README.md)
 
 ### [BFS/DFS](algorithm/src/main/java/dataStructure/bfsANDdfs/README.md)
+
+### [Sorting](algorithm/src/main/java/dataStructure/sorting/README.md)
