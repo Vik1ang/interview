@@ -4,6 +4,8 @@
     - [Selection Sort 选择排序](#selection-sort-选择排序)
     - [Bubble Sort 冒泡排序](#bubble-sort-冒泡排序)
     - [Insertion Sort 插入排序](#insertion-sort-插入排序)
+    - [希尔排序](#希尔排序)
+    - [归并排序](#归并排序)
 
 ### Selection Sort 选择排序
 
@@ -65,3 +67,31 @@ public class Bubble {
 
 ![](https://camo.githubusercontent.com/9dc4032a0ee029d5e0549dd9129bead2f02b99db6b3c9d06ae44ec69a04697b1/68747470733a2f2f63732d6e6f7465732d313235363130393739362e636f732e61702d6775616e677a686f752e6d7971636c6f75642e636f6d2f33353235336661342d663630612d346533622d616165632d3866633833356161626461632e676966)
 
+```java
+public class Insertion {
+    public void sort(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            // 从已经排序的序列最右边的开始比较, 找到比其小的数
+            for (int j = i; j > 0 && nums[j] < nums[j - 1]; j--) {
+                swap(nums, j, j - 1);
+            }
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+```
+
+### 希尔排序
+
+### 归并排序
+
+![](https://www.runoob.com/wp-content/uploads/2019/03/mergeSort.gif)
+
+```java
+
+```
