@@ -12,6 +12,9 @@
     - [3. 无重复字符的最长子串](#3-无重复字符的最长子串)
   - [Binary Search](#binary-search)
     - [240. 搜索二维矩阵 II](#240-搜索二维矩阵-ii)
+  - [Double Pointer](#double-pointer)
+    - [26. 删除有序数组中的重复项](#26-删除有序数组中的重复项)
+    - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
 
 ## Prefix Sum
 
@@ -525,6 +528,53 @@ public class Solution {
             }
         }
         return -1;
+    }
+}
+```
+
+## Double Pointer
+
+### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+```java
+public class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+
+        int slow = 0, fast = 0;
+        while (fast < nums.length) {
+            if (nums[fast] != nums[slow]) {
+                slow++;
+                nums[slow] = nums[fast];
+            }
+            fast++;
+        }
+
+        return slow + 1;
+    }
+}
+```
+
+### [80. 删除有序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/)
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return n;
+        }
+        int slow = 2, fast = 2;
+        while (fast < n) {
+            if (nums[slow - 2] != nums[fast]) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow;
     }
 }
 ```
