@@ -17,6 +17,7 @@
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
     - [27. 移除元素](#27-移除元素)
     - [283. 移动零](#283-移动零)
+    - [剑指 Offer 03. 数组中重复的数字](#剑指-offer-03-数组中重复的数字)
 
 ## Prefix Sum
 
@@ -618,6 +619,29 @@ public class Solution {
             nums[slow] = 0;
             slow++;
         }
+    }
+}
+```
+
+### [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
+
+```java
+public class Solution {
+    public int findRepeatNumber(int[] nums) {
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] == i) {
+                i++;
+                continue;
+            }
+            if (nums[nums[i]] == nums[i]) {
+                return nums[i];
+            }
+            int temp = nums[i];
+            nums[i] = nums[temp];
+            nums[temp] = temp;
+        }
+        return -1;
     }
 }
 ```
