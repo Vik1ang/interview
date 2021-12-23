@@ -15,6 +15,8 @@
   - [Double Pointer](#double-pointer)
     - [26. 删除有序数组中的重复项](#26-删除有序数组中的重复项)
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
+    - [27. 移除元素](#27-移除元素)
+    - [283. 移动零](#283-移动零)
 
 ## Prefix Sum
 
@@ -575,6 +577,47 @@ class Solution {
             fast++;
         }
         return slow;
+    }
+}
+```
+
+### [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
+
+```java
+public class Solution {
+    public int removeElement(int[] nums, int val) {
+        int fast = 0, slow = 0;
+        while (fast < nums.length) {
+            if (nums[fast] != val) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow;
+    }
+}
+```
+
+### [283. 移动零](https://leetcode-cn.com/problems/move-zeroes/)
+
+```java
+public class Solution {
+    public void moveZeroes(int[] nums) {
+        int slow = 0, fast = 0;
+
+        while (fast < nums.length) {
+            if (nums[fast] != 0) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+
+        while (slow < nums.length) {
+            nums[slow] = 0;
+            slow++;
+        }
     }
 }
 ```
