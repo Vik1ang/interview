@@ -17,6 +17,7 @@
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
     - [27. 移除元素](#27-移除元素)
     - [283. 移动零](#283-移动零)
+  - [Other](#other)
     - [剑指 Offer 03. 数组中重复的数字](#剑指-offer-03-数组中重复的数字)
 
 ## Prefix Sum
@@ -622,6 +623,8 @@ public class Solution {
     }
 }
 ```
+
+## Other
 
 ### [剑指 Offer 03. 数组中重复的数字](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
 
