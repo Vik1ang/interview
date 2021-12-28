@@ -13,6 +13,7 @@
     - [3. 无重复字符的最长子串](#3-无重复字符的最长子串)
   - [Binary Search](#binary-search)
     - [240. 搜索二维矩阵 II](#240-搜索二维矩阵-ii)
+    - [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
   - [Double Pointer](#double-pointer)
     - [26. 删除有序数组中的重复项](#26-删除有序数组中的重复项)
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
@@ -563,6 +564,30 @@ public class Solution {
             }
         }
         return -1;
+    }
+}
+```
+
+### [153. 寻找旋转排序数组中的最小值](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/)
+
+我们考虑数组中的**最后一个元素** `x`: 在最小值右侧的元素(不包括最后一个元素本身), 它们的值一定都严格小于`x`; 而在最小值左侧的元素, 它们的值一定都严格大于 `x`; 因此, 我们可以根据这一条性质, 通过二分查找的方法找出最小值
+
+```java
+public class Solution {
+    public int findMin(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        while (low < high) {
+            int pivot = low + (high - low) / 2;
+            if (nums[pivot] < nums[high]) {
+                high = pivot;
+            } else {
+                low = pivot + 1;
+            }
+        }
+
+        return nums[low];
     }
 }
 ```
