@@ -14,6 +14,7 @@
   - [Binary Search](#binary-search)
     - [240. 搜索二维矩阵 II](#240-搜索二维矩阵-ii)
     - [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
+    - [154. 寻找旋转排序数组中的最小值 II](#154-寻找旋转排序数组中的最小值-ii)
   - [Double Pointer](#double-pointer)
     - [26. 删除有序数组中的重复项](#26-删除有序数组中的重复项)
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
@@ -587,6 +588,31 @@ public class Solution {
             }
         }
 
+        return nums[low];
+    }
+}
+```
+
+### [154. 寻找旋转排序数组中的最小值 II](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/)
+
+类似 [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
+
+```java
+public class Solution {
+    public int findMin(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        while (low < high) {
+            int pivot = low + (high - low) / 2;
+            if (nums[pivot] < nums[high]) {
+                high = pivot;
+            } else if (nums[pivot] > nums[high]) {
+                low = pivot + 1;
+            } else {
+                high -= 1;
+            }
+        }
         return nums[low];
     }
 }
