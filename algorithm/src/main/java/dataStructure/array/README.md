@@ -21,6 +21,9 @@
     - [27. 移除元素](#27-移除元素)
     - [283. 移动零](#283-移动零)
     - [88. 合并两个有序数组](#88-合并两个有序数组)
+  - [Hash](#hash)
+    - [1. 两数之和](#1-两数之和)
+    - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
   - [Other](#other)
     - [剑指 Offer 03. 数组中重复的数字](#剑指-offer-03-数组中重复的数字)
 
@@ -730,6 +733,64 @@ public class Solution {
             }
             nums1[tail--] = cur;
         }
+    }
+}
+```
+
+## Hash
+
+### [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
+
+```java
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int n = nums.length;
+        HashMap<Integer, Integer> index = new HashMap<>();
+        // 构造一个哈希表: 元素映射到相应的索引
+        for (int i = 0; i < n; i++) {
+            index.put(nums[i], i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            int other = target - nums[i];
+            // 如果 other 存在且不是 nums[i] 本身
+            if (index.containsKey(other) && index.get(other) != i) {
+                return new int[]{i, index.get(other)};
+            }
+        }
+        return new int[]{-1, -1};
+    }
+}
+```
+
+### [170. 两数之和 III - 数据结构设计](https://leetcode-cn.com/problems/two-sum-iii-data-structure-design/)
+
+```java
+public class TwoSum {
+    Map<Integer, Integer> freq = new HashMap<>();
+
+    public TwoSum() {
+
+    }
+
+    public void add(int number) {
+        // 记录 number 出现的次数
+        freq.put(number, freq.getOrDefault(number, 0) + 1);
+    }
+
+    public boolean find(int value) {
+        for (Integer key : freq.keySet()) {
+            int other = value - key;
+            // 情况一
+            if (other == key && freq.get(key) > 1) {
+                return true;
+            }
+            // 情况二
+            if (other != key && freq.containsKey(other)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 ```
