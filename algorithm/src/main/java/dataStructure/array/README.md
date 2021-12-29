@@ -20,6 +20,7 @@
     - [80. 删除有序数组中的重复项 II](#80-删除有序数组中的重复项-ii)
     - [27. 移除元素](#27-移除元素)
     - [283. 移动零](#283-移动零)
+    - [88. 合并两个有序数组](#88-合并两个有序数组)
   - [Other](#other)
     - [剑指 Offer 03. 数组中重复的数字](#剑指-offer-03-数组中重复的数字)
 
@@ -701,6 +702,33 @@ public class Solution {
         while (slow < nums.length) {
             nums[slow] = 0;
             slow++;
+        }
+    }
+}
+```
+
+### [88. 合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/)
+
+**逆向双指针**
+
+```java
+public class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1, p2 = n - 1;
+        int tail = m + n - 1;
+        int cur;
+
+        while (p1 >= 0 || p2 >= 0) {
+            if (p1 == -1) {
+                cur = nums2[p2--];
+            } else if (p2 == -1) {
+                cur = nums1[p1--];
+            } else if (nums1[p1] > nums2[p2]) {
+                cur = nums1[p1--];
+            } else {
+                cur = nums2[p2--];
+            }
+            nums1[tail--] = cur;
         }
     }
 }
