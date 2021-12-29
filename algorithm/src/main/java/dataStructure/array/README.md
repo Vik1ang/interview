@@ -21,6 +21,8 @@
     - [27. 移除元素](#27-移除元素)
     - [283. 移动零](#283-移动零)
     - [88. 合并两个有序数组](#88-合并两个有序数组)
+    - [15. 三数之和](#15-三数之和)
+    - [18. 四数之和](#18-四数之和)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -733,6 +735,123 @@ public class Solution {
             }
             nums1[tail--] = cur;
         }
+    }
+}
+```
+
+### [15. 三数之和](https://leetcode-cn.com/problems/3sum/)
+
+第二重循环枚举到的元素不小于当前第一重循环枚举到的元素
+
+第三重循环枚举到的元素不小于当前第二重循环枚举到的元素
+
+```java
+public class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+
+        // 枚举a
+        for (int first = 0; first < n; first++) {
+            // 需要和上一次枚举的数不相同
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
+            // c 对应的指针初始指向数组的最右端
+            int third = n - 1;
+            int target = -nums[first];
+
+            // 枚举 b
+            for (int second = first + 1; second < n; second++) {
+                // 需要和上一次枚举的数不相同
+                if (second > first + 1 && nums[second] == nums[second - 1]) {
+                    continue;
+                }
+                // 需要保证 b 的指针在 c 的指针的左侧
+                while (second < third && nums[second] + nums[third] > target) {
+                    --third;
+                }
+                // 如果指针重合，随着 b 后续的增加
+                // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
+                if (second == third) {
+                    break;
+                }
+                if (nums[second] + nums[third] == target) {
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(nums[first]);
+                    list.add(nums[second]);
+                    list.add(nums[third]);
+                    res.add(list);
+                }
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+### [18. 四数之和](https://leetcode-cn.com/problems/4sum/)
+
+类似 [15. 三数之和](#15-三数之和)
+
+```java
+public class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length < 4) {
+            return res;
+        }
+
+        int n = nums.length;
+        Arrays.sort(nums);
+
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            if ((long) nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) {
+                break;
+            }
+            if ((long) nums[i] + nums[n - 3] + nums[n - 2] + nums[n - 1] < target) {
+                continue;
+            }
+
+            // 穷举b
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+                if ((long) nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) {
+                    break;
+                }
+                if ((long) nums[i] + nums[j] + nums[n - 2] + nums[n - 1] < target) {
+                    continue;
+                }
+                int left = j + 1, right = n - 1;
+                while (left < right) {
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        res.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        while (left < right && nums[left] == nums[left + 1]) {
+                            left++;
+                        }
+                        left++;
+                        while (left < right && nums[right] == nums[right - 1]) {
+                            right--;
+                        }
+                        right--;
+                    } else if (sum < target) {
+                        left++;
+                    } else {
+                        right--;
+                    }
+                }
+            }
+        }
+
+        return res;
     }
 }
 ```
