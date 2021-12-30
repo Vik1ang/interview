@@ -30,6 +30,7 @@
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
   - [Other](#other)
     - [剑指 Offer 03. 数组中重复的数字](#剑指-offer-03-数组中重复的数字)
+    - [54. 螺旋矩阵](#54-螺旋矩阵)
 
 ## Prefix Sum
 
@@ -1017,6 +1018,45 @@ public class Solution {
             nums[temp] = temp;
         }
         return -1;
+    }
+}
+```
+
+### [54. 螺旋矩阵](https://leetcode-cn.com/problems/spiral-matrix/)
+
+![](https://assets.leetcode-cn.com/solution-static/54/54_fig1.png)
+
+```java
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> order = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return order;
+        }
+
+        int rows = matrix.length, columns = matrix[0].length;
+        int left = 0, right = columns - 1, top = 0, bottom = rows - 1;
+        while (left <= right && top <= bottom) {
+            for (int column = left; column <= right; column++) {
+                order.add(matrix[top][column]);
+            }
+            for (int row = top + 1; row <= bottom; row++) {
+                order.add(matrix[row][right]);
+            }
+            if (left < right && top < bottom) {
+                for (int column = right - 1; column > left; column--) {
+                    order.add(matrix[bottom][column]);
+                }
+                for (int row = bottom; row > top; row--) {
+                    order.add(matrix[row][left]);
+                }
+            }
+            left++;
+            right--;
+            top++;
+            bottom--;
+        }
+        return order;
     }
 }
 ```
