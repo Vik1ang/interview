@@ -23,6 +23,7 @@
     - [88. 合并两个有序数组](#88-合并两个有序数组)
     - [15. 三数之和](#15-三数之和)
     - [18. 四数之和](#18-四数之和)
+    - [259. 较小的三数之和](#259-较小的三数之和)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -852,6 +853,36 @@ public class Solution {
         }
 
         return res;
+    }
+}
+```
+
+### [259. 较小的三数之和](https://leetcode-cn.com/problems/3sum-smaller/)
+
+```java
+public class Solution {
+    public int threeSumSmaller(int[] nums, int target) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length - 2; i++) {
+            sum += twoSumSmaller(nums, i + 1, target - nums[i]);
+        }
+        return sum;
+    }
+
+    private int twoSumSmaller(int[] nums, int startIndex, int target) {
+        int sum = 0;
+        int left = startIndex;
+        int right = nums.length - 1;
+        while (left < right) {
+            if (nums[left] + nums[right] < target) {
+                sum += right - left;
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return sum;
     }
 }
 ```
