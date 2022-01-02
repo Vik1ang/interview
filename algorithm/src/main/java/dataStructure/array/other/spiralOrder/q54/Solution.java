@@ -1,4 +1,4 @@
-package dataStructure.array.q54.spiralOrder;
+package dataStructure.array.other.spiralOrder.q54;
 
 import java.util.List;
 
