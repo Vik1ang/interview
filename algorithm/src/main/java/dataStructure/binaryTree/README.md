@@ -20,6 +20,7 @@
     - [q95. 不同的二叉搜索树 II](#q95-不同的二叉搜索树-ii)
     - [1373. 二叉搜索子树的最大键值和](#1373-二叉搜索子树的最大键值和)
     - [q297. 二叉树的序列化与反序列化](#q297-二叉树的序列化与反序列化)
+    - [102. 二叉树的层序遍历](#102-二叉树的层序遍历)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -1088,5 +1089,41 @@ public class Codec {
         return root;
     }
 
+}
+```
+
+### [102. 二叉树的层序遍历](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+
+```java
+public class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            List<Integer> level = new ArrayList<>();
+            int size = queue.size();
+
+            for (int i = 1; i <= size; i++) {
+                TreeNode node = queue.poll();
+                level.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+
+            res.add(level);
+        }
+
+        return res;
+    }
 }
 ```
