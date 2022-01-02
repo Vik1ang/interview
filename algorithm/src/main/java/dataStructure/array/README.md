@@ -29,6 +29,7 @@
     - [977. 有序数组的平方](#977-有序数组的平方)
     - [344. 反转字符串](#344-反转字符串)
     - [151. 翻转字符串里的单词](#151-翻转字符串里的单词)
+    - [剑指 Offer 05. 替换空格](#剑指-offer-05-替换空格)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -1053,6 +1054,75 @@ public class Solution {
         deque.offerFirst(word.toString());
 
         return String.join(" ", deque);
+    }
+}
+```
+
+### [剑指 Offer 05. 替换空格](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
+
+```java
+public class Solution {
+    public String replaceSpace(String s) {
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+
+        //扩充空间，空格数量2倍
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                str.append("  ");
+            }
+        }
+
+        //若是没有空格直接返回
+        if (str.length() == 0) {
+            return s;
+        }
+
+        //有空格情况 定义两个指针
+        int left = s.length() - 1;// 左指针：指向原始字符串最后一个位置
+        s += str.toString();
+        int right = s.length() - 1;// 右指针：指向扩展字符串的最后一个位置
+
+        char[] chars = s.toCharArray();
+
+        while (left >= 0) {
+            if (chars[left] == ' ') {
+                chars[right--] = '0';
+                chars[right--] = '2';
+                chars[right] = '%';
+            } else {
+                chars[right] = chars[left];
+            }
+            left--;
+            right--;
+        }
+        return new String(chars);
+    }
+}
+```
+
+好理解一点的
+
+```java
+public class Solution {
+    public String replaceSpace(String s) {
+        int length = s.length();
+        char[] arr = new char[length * 3];
+        int size = 0;
+        for (int i = 0; i < length; i++) {
+            char c = s.charAt(i);
+            if (c == ' ') {
+                arr[size++] = '%';
+                arr[size++] = '2';
+                arr[size++] = '0';
+            } else {
+                arr[size++] = c;
+            }
+        }
+
+        return new String(arr, 0, size);
     }
 }
 ```
