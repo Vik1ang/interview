@@ -25,6 +25,8 @@
     - [199. 二叉树的右视图](#199-二叉树的右视图)
     - [637. 二叉树的层平均值](#637-二叉树的层平均值)
     - [429. N 叉树的层序遍历](#429-n-叉树的层序遍历)
+    - [515. 在每个树行中找最大值](#515-在每个树行中找最大值)
+    - [](#)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -1270,3 +1272,37 @@ public class Solution {
 }
 ```
 
+### [515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
+
+```java
+public class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+        ArrayList<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int max = Integer.MIN_VALUE;
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                max = Math.max(max, node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            res.add(max);
+        }
+        return res;
+    }
+}
+```
+
+### []()
