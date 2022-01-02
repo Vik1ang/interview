@@ -25,6 +25,7 @@
     - [18. 四数之和](#18-四数之和)
     - [259. 较小的三数之和](#259-较小的三数之和)
     - [16. 最接近的三数之和](#16-最接近的三数之和)
+    - [977. 有序数组的平方](#977-有序数组的平方)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -935,6 +936,29 @@ public class Solution {
         }
 
         return best;
+    }
+}
+```
+
+### [977. 有序数组的平方](https://leetcode-cn.com/problems/squares-of-a-sorted-array/)
+
+```java
+public class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        int[] result = new int[nums.length];
+
+        int index = result.length - 1;
+        while (left <= right) {
+            if (Math.pow(nums[left], 2) > Math.pow(nums[right], 2)) {
+                result[index--] = (int) Math.pow(nums[left], 2);
+                left++;
+            } else {
+                result[index--] = (int) Math.pow(nums[right], 2);
+                right--;
+            }
+        }
+        return result;
     }
 }
 ```
