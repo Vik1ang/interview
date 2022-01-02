@@ -27,6 +27,7 @@
     - [259. 较小的三数之和](#259-较小的三数之和)
     - [16. 最接近的三数之和](#16-最接近的三数之和)
     - [977. 有序数组的平方](#977-有序数组的平方)
+    - [344. 反转字符串](#344-反转字符串)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -994,6 +995,25 @@ public class Solution {
             }
         }
         return result;
+    }
+}
+```
+
+### [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
+
+```java
+class Solution {
+    public void reverseString(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+
+        while (left < right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
     }
 }
 ```
