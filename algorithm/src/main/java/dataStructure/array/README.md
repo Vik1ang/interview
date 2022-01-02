@@ -28,6 +28,7 @@
     - [16. 最接近的三数之和](#16-最接近的三数之和)
     - [977. 有序数组的平方](#977-有序数组的平方)
     - [344. 反转字符串](#344-反转字符串)
+    - [151. 翻转字符串里的单词](#151-翻转字符串里的单词)
   - [Hash](#hash)
     - [1. 两数之和](#1-两数之和)
     - [170. 两数之和 III - 数据结构设计](#170-两数之和-iii---数据结构设计)
@@ -1014,6 +1015,44 @@ class Solution {
             left++;
             right--;
         }
+    }
+}
+```
+
+### [151. 翻转字符串里的单词](https://leetcode-cn.com/problems/reverse-words-in-a-string/)
+
+```java
+public class Solution {
+    public String reverseWords(String s) {
+        int left = 0, right = s.length() - 1;
+
+        // 去掉字符串开头的空白字符
+        while (left <= right && s.charAt(left) == ' ') {
+            left++;
+        }
+        // 去掉字符串末尾的空白字符
+        while (left <= right && s.charAt(right) == ' ') {
+            right--;
+        }
+
+        Deque<String> deque = new ArrayDeque<>();
+        StringBuilder word = new StringBuilder();
+
+        while (left <= right) {
+            char c = s.charAt(left);
+            if ((word.length() != 0) && (c == ' ')) {
+                // 将单词 push 到队列的头部
+                deque.offerFirst(word.toString());
+                word.setLength(0);
+            } else if (c != ' ') {
+                word.append(c);
+            }
+            left++;
+        }
+
+        deque.offerFirst(word.toString());
+
+        return String.join(" ", deque);
     }
 }
 ```
