@@ -23,6 +23,7 @@
     - [102. 二叉树的层序遍历](#102-二叉树的层序遍历)
     - [107. 二叉树的层序遍历 II](#107-二叉树的层序遍历-ii)
     - [199. 二叉树的右视图](#199-二叉树的右视图)
+    - [637. 二叉树的层平均值](#637-二叉树的层平均值)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -1193,6 +1194,41 @@ public class Solution {
                     res.add(node.val);
                 }
             }
+        }
+
+        return res;
+    }
+}
+```
+
+### [637. 二叉树的层平均值](https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/)
+
+```java
+public class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        ArrayList<Double> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            double sum = 0;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                sum += node.val;
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+
+            res.add(sum / size);
         }
 
         return res;
