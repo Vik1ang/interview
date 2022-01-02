@@ -11,6 +11,7 @@
     - [567. 字符串的排列](#567-字符串的排列)
     - [438. 找到字符串中所有字母异位词](#438-找到字符串中所有字母异位词)
     - [3. 无重复字符的最长子串](#3-无重复字符的最长子串)
+    - [209. 长度最小的子数组](#209-长度最小的子数组)
   - [Binary Search](#binary-search)
     - [240. 搜索二维矩阵 II](#240-搜索二维矩阵-ii)
     - [153. 寻找旋转排序数组中的最小值](#153-寻找旋转排序数组中的最小值)
@@ -377,6 +378,40 @@ public class Solution {
         }
 
         return res;
+    }
+}
+```
+
+### [209. 长度最小的子数组](https://leetcode-cn.com/problems/minimum-size-subarray-sum/)
+
+```java
+public class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int left = 0, right = 0;
+        int sum = 0;
+        int res = Integer.MAX_VALUE;
+        while (right < nums.length) {
+            int num = nums[right];
+            right++;
+
+            sum += num;
+
+            if (sum >= target) {
+                res = Math.min(res, right - left);
+            }
+
+            while (sum >= target) {
+                int temp = nums[left];
+                left++;
+
+                sum -= temp;
+                if (sum >= target) {
+                    res = Math.min(res, right - left);
+                }
+            }
+        }
+
+        return res == Integer.MAX_VALUE ? 0 : res;
     }
 }
 ```
