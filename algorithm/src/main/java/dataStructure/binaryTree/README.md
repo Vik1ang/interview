@@ -27,6 +27,7 @@
     - [429. N 叉树的层序遍历](#429-n-叉树的层序遍历)
     - [515. 在每个树行中找最大值](#515-在每个树行中找最大值)
     - [117. 填充每个节点的下一个右侧节点指针 II](#117-填充每个节点的下一个右侧节点指针-ii)
+    - [104. 二叉树的最大深度](#104-二叉树的最大深度)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -1341,6 +1342,56 @@ public class Solution {
             preNode.next = null; // 本层最后一个节点 next 指向 null
         }
         return root;
+    }
+}
+```
+
+### [104. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+
+层次遍历
+
+```java
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        int count = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            count += 1;
+        }
+
+        return count;
+    }
+}
+```
+
+深度优先
+
+```java
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            int left = maxDepth(root.left);
+            int right = maxDepth(root.right);
+            return Math.max(left, right) + 1;
+        }
     }
 }
 ```
