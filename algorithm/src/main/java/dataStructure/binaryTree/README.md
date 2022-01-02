@@ -22,6 +22,7 @@
     - [q297. 二叉树的序列化与反序列化](#q297-二叉树的序列化与反序列化)
     - [102. 二叉树的层序遍历](#102-二叉树的层序遍历)
     - [107. 二叉树的层序遍历 II](#107-二叉树的层序遍历-ii)
+    - [199. 二叉树的右视图](#199-二叉树的右视图)
 
 ### [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
@@ -1158,6 +1159,40 @@ public class Solution {
             }
 
             res.add(0, level);
+        }
+
+        return res;
+    }
+}
+```
+
+### [199. 二叉树的右视图](https://leetcode-cn.com/problems/binary-tree-right-side-view/)
+
+```java
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                if (i == size - 1) {
+                    res.add(node.val);
+                }
+            }
         }
 
         return res;
