@@ -20,12 +20,12 @@ public class Solution {
             p = p.next;
         }
 
-        while (p1 != null) {
+        if (p1 != null) {
             p.next = p1;
             p1 = p1.next;
         }
 
-        while (p2 != null) {
+        if (p2 != null) {
             p.next = p2;
             p2 = p2.next;
         }
