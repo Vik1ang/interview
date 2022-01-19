@@ -1,7 +1,6 @@
 package top100.q394;
 
 import java.util.Collections;
-import java.util.Deque;
 import java.util.LinkedList;
 
 
@@ -9,7 +8,7 @@ public class Solution {
     private int ptr;
 
     public String decodeString(String s) {
-        LinkedList<String> stack = new LinkedList<String>();
+        LinkedList<String> stack = new LinkedList<>();
 
         ptr = 0;
         while (ptr < s.length()) {
