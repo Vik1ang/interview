@@ -3,13 +3,15 @@ package top100.q494;
 import java.util.HashMap;
 
 public class Solution {
-    public int findTargetSumWays(int[] nums, int target) {
-        if (nums.length == 0) return 0;
-        return dp(nums, 0, target);
-    }
-
     // 备忘录
     HashMap<String, Integer> memo = new HashMap<>();
+
+    public int findTargetSumWays(int[] nums, int target) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        return dp(nums, 0, target);
+    }
 
     int dp(int[] nums, int i, int rest) {
         // base case
