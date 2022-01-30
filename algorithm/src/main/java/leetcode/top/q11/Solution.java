@@ -1,4 +1,4 @@
-package leetcode.top.q10;
+package leetcode.top.q11;
 
 public class Solution {
     public int maxArea(int[] height) {
